@@ -1,0 +1,6 @@
+{
+  "repository": "https://github.com/orcahand/orcahand_description",
+  "sha": "b9b349a21ee0238c62b6cf92ae7597027867adf8",
+  "model": "v1/models/urdf/orcahand_right_extended.urdf",
+  "changes": "Removed collision elements; localized visual mesh paths; no geometry modified."
+}

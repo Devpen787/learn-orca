@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Learn ORCA — interactive hand lessons</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav class="rail" aria-label="Main">
+      <a href="#" aria-label="Home" id="home">⌂</a>
+      <a href="#lessons" aria-label="Lessons">☷</a>
+      <a href="#information" aria-label="Hand information"
+        ><svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 10v7M12 6v1" /></svg
+      ></a>
+      <button id="nav-run" aria-label="Run lesson">▷</button>
+      <a
+        href="https://www.orcahand.com/models"
+        target="_blank"
+        rel="noopener"
+        aria-label="Explore ORCA products"
+        >↗</a
+      >
+    </nav>
+    <main>
+      <header>
+        <div class="brand">
+          <span aria-label="Independent ORCA learning project">◈</span>
+          <div>
+            <h1>LEARN ORCA</h1>
+            <small>EXPLORE · UNDERSTAND · MOVE</small>
+          </div>
+        </div>
+        <div class="progress">
+          <span>HAND BASICS</span>
+          <div>
+            <progress id="progress" max="5" value="0"></progress
+            ><b id="progress-label">0/5</b>
+          </div>
+        </div>
+        <span class="scope" id="clock" aria-label="Local date and time"></span>
+      </header>
+      <section class="stage" id="stage" aria-label="Interactive ORCA model">
+        <div
+          id="viewer"
+          tabindex="0"
+          aria-label="3D ORCA hand. Drag or WASD to pan; Q/E to rotate; scroll to zoom."
+        ></div>
+        <span id="loading">ASSEMBLING THE HAND…</span
+        ><svg id="leaders" aria-hidden="true"></svg>
+        <div id="labels"></div>
+        <button id="covers" class="cover-toggle" aria-pressed="false">
+          Show covers
+        </button>
+        <aside id="tip" hidden>
+          <b id="tip-title"></b>
+          <p id="tip-copy"></p>
+          <button id="close-tip" aria-label="Close label">×</button>
+        </aside>
+        <div class="stage-caption">
+          <span id="stage-label">ORCA EXTENDED RESEARCH ASSEMBLY</span
+          ><span>V1 LEGACY MODEL · ILLUSTRATIVE MOTION</span>
+        </div>
+        <div class="viewbar" role="toolbar" aria-label="3D view">
+          <button id="left" aria-label="Turn left">
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M6 8a8 8 0 1 1-1 9M6 3v6h6" />
+            </svg></button
+          ><button id="right" aria-label="Turn right">
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 8a8 8 0 1 0 1 9m-1-14v6h-6" />
+            </svg></button
+          ><i></i><button id="out" aria-label="Zoom out">−</button
+          ><button id="in" aria-label="Zoom in">+</button><i></i
+          ><button id="fit" aria-label="Reset view">
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="7" />
+              <path d="M12 1v7m0 8v7M1 12h7m8 0h7" />
+            </svg>
+          </button>
+        </div>
+      </section>
+      <section class="lesson-strip" id="lessons">
+        <h2>LESSONS <span id="lesson-position">01 / 05</span></h2>
+        <div id="lesson-list"></div>
+      </section>
+      <div class="bottom-grid">
+        <section class="information" id="information">
+          <div class="tabs" role="tablist" aria-label="Lesson information">
+            <button role="tab" aria-selected="true" id="tab-overview">
+              OVERVIEW</button
+            ><button role="tab" aria-selected="false" id="tab-joints">
+              JOINT MAP</button
+            ><button role="tab" aria-selected="false" id="tab-hardware">
+              REAL HAND
+            </button>
+          </div>
+          <div id="information-body"></div>
+        </section>
+        <section class="workbench" aria-labelledby="try-title">
+          <div class="code-title">
+            <h2 id="try-title">TRY IT YOURSELF</h2>
+            <button id="copy" aria-label="Copy code">Copy</button
+            ><button id="run" class="run">▶ Run</button>
+          </div>
+          <div id="exercise"></div>
+          <pre id="code"></pre>
+          <div class="monitor">
+            <div>
+              <span class="dot"></span> MODEL OUTPUT <b id="run-state">READY</b
+              ><button id="stop">■ Stop</button>
+            </div>
+            <ol id="feedback" role="status" aria-live="polite">
+              Select a label on the hand to begin.
+            </ol>
+          </div>
+        </section>
+      </div>
+      <footer>
+        Independent project by Devinson Peña · <a href="README.md">Guide</a> ·
+        <a href="THIRD_PARTY_NOTICES.md">Sources &amp; attribution</a> ·
+        <a href="LICENSE">Code license</a> ·
+        <a href="model/LICENSE">Model license</a><br />Browser targets only ·
+        legacy v1 model · no physics, firmware or sensor simulation.
+      </footer>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "learn-orca",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22 <25"
+  },
+  "scripts": {
+    "build": "esbuild app.entry.js --bundle --outfile=app.js",
+    "test": "node --test playback.test.mjs",
+    "dev": "npm run build && python3 -m http.server 8974 --bind 127.0.0.1",
+    "test:e2e": "playwright test",
+    "check:privacy": "node scripts/check-release.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "verify": "npm run format:check && npm run check:privacy && npm test && npm run build"
+  },
+  "dependencies": {
+    "three": "0.185.1",
+    "urdf-loader": "0.13.1"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.10",
+    "prettier": "3.9.6",
+    "@playwright/test": "1.62.1"
+  }
+}
