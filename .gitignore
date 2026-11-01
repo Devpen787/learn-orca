@@ -5,3 +5,5 @@ app.js
 .env.*
 test-results/
 playwright-report/
+dist/
+.vercel/
