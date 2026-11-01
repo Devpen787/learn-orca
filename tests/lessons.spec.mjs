@@ -1,14 +1,37 @@
-import { test, expect } from "@playwright/test";
+import { test as base, expect } from "@playwright/test";
 
-test("five lessons, model commands and recorded-evidence fallback", async ({
-  page,
-}) => {
-  const errors = [];
-  page.on("pageerror", (error) => errors.push(error.message));
+// Each lesson gets a fresh model and the same error/layout checks. Keeping the
+// flows independent avoids spending one test budget on all five WebGL lessons.
+const test = base.extend({
+  runtimeChecks: [
+    async ({ page }, use) => {
+      const errors = [];
+      page.on("pageerror", (error) => errors.push(error.message));
+      await use();
+      expect(errors).toEqual([]);
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth,
+        ),
+      ).toBeTruthy();
+    },
+    { auto: true },
+  ],
+});
+
+test.beforeEach(async ({ page }) => {
   await page.goto("/?qa-motion=reduce&qa-recording-missing=1");
   await expect(page).toHaveTitle("Learn ORCA — interactive hand lessons");
   await expect(page.locator("#loading")).toBeHidden({ timeout: 30000 });
   await expect(page.locator("#viewer canvas")).toBeVisible();
+});
+
+test("lesson 1 identifies a model part", async ({ page }) => {
+  await page.getByRole("button", { name: "KNUCKLE", exact: true }).click();
+  await expect(page.locator("#part-inspector")).toBeVisible();
+});
+
+test("lesson 2 commands the selected joint target", async ({ page }) => {
   await page
     .getByRole("button", { name: "Lesson 2: Move a joint", exact: true })
     .click();
@@ -19,7 +42,9 @@ test("five lessons, model commands and recorded-evidence fallback", async ({
   await page.locator("#run").click();
   await expect(page.locator("#feedback")).toContainText("middle_mcp → 42°");
   await expect(page.locator("#code")).toContainText("middle_mcp");
+});
 
+test("lesson 3 shows both finger-shape targets in code", async ({ page }) => {
   await page
     .getByRole("button", { name: "Lesson 3: Shape a finger", exact: true })
     .click();
@@ -28,7 +53,9 @@ test("five lessons, model commands and recorded-evidence fallback", async ({
   await page.locator("#run").click();
   await expect(page.locator("#code")).toContainText("45");
   await expect(page.locator("#code")).toContainText("15");
+});
 
+test("lesson 4 starts, pauses and stops a sequence", async ({ page }) => {
   await page
     .getByRole("button", { name: "Lesson 4: Run a sequence", exact: true })
     .click();
@@ -38,7 +65,11 @@ test("five lessons, model commands and recorded-evidence fallback", async ({
   await page.locator("#run").click();
   await expect(page.locator("#run-state")).toHaveText("PAUSED");
   await page.locator("#stop").click();
+});
 
+test("lesson 5 handles unavailable footage and returns to the model", async ({
+  page,
+}) => {
   await page
     .getByRole("button", { name: "Lesson 5: Discover touch", exact: true })
     .click();
@@ -62,10 +93,4 @@ test("five lessons, model commands and recorded-evidence fallback", async ({
     .click();
   await page.getByRole("button", { name: "KNUCKLE", exact: true }).click();
   await expect(page.locator("#part-inspector")).toBeVisible();
-  expect(errors).toEqual([]);
-  expect(
-    await page.evaluate(
-      () => document.documentElement.scrollWidth <= innerWidth,
-    ),
-  ).toBeTruthy();
 });
