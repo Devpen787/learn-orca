@@ -6,6 +6,12 @@ measured feedback are different.
 
 Independent educational work by Devinson Peña. Not an official ORCA product.
 
+**[Try the browser demo](https://learn-orca.vercel.app/)** ·
+**[Explore the source](https://github.com/Devpen787/learn-orca)**
+
+Feedback welcome: which control or explanation first made the movement unclear?
+Include the lesson, device/browser and what you expected in a GitHub issue.
+
 ![Joint controls and source-linked lesson beside the ORCA model](docs/assets/learn-orca-desktop.png)
 
 ## Run locally
